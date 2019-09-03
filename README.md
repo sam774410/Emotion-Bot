@@ -40,7 +40,7 @@ run 50 epochs and validation accuracy stopped at 79%
 
 #### Demo
 Via Line bot as demo, input an image then return predict result.
-image source: [The Japanese Female Facial Expression (JAFFE)](http://www.kasrl.org/jaffe.html) 
+image source: [JAFFE](http://www.kasrl.org/jaffe.html) 
 ![Imgur](https://i.imgur.com/kqx8QSE.jpg?1)
 
 ###### tags: `LineBot`
