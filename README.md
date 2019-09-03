@@ -30,7 +30,7 @@ Using deep learning neural networks approach to classify **eight categories** of
 
 
 ## Result & Demo
-#### Training & testing phase 
+#### Training & validation phase 
 run 50 epochs and validation accuracy stopped at 79%
 ![Imgur](https://i.imgur.com/cVYjZ5e.png)
 
