@@ -1,7 +1,7 @@
 # Facial Expression Recognition Bot
 
 ## Introduction
-Using deep learning neural networks approach to classify **eight categories** of human facial emotion：++Angry, Disgusted, Fearful, Happy, Neutral, Sad, Surprised, Worry++.
+Using deep learning neural networks approach to classify **eight categories** of human facial emotion：Angry, Disgusted, Fearful, Happy, Neutral, Sad, Surprised and Worry.
 
 
 ## Dependencies
