@@ -14,6 +14,20 @@ from linebot.models import (
     TextComponent, SpacerComponent, IconComponent, ButtonComponent,
     SeparatorComponent, QuickReply, QuickReplyButton
 )
+# content_temp =[ SeparatorComponent(margin='md')]
+# for i in ["angry","happy"]:
+#     content_temp.append(BoxComponent(
+#         layout = 'horizontal',
+#         spacing='md',
+#         contents = [
+                            
+#             TextComponent(text='情緒 :', size='lg', color='#9d9d9d', align='center'), 
+#             TextComponent(text='{0}'.format(i), size='lg', color='#00BE00', weight='bold')
+#         ]
+#     ))
+# [
+                    
+
 
 
 
@@ -38,17 +52,15 @@ class Dashboard():
             body=BoxComponent(
                 layout='vertical',
                 spacing='md',
-                contents=[
-                    
-                    SeparatorComponent(margin='md'),
+                contents=[SeparatorComponent(margin='md'),
 
                     BoxComponent(
                         layout = 'horizontal',
                         spacing='md',
                         contents = [
-        
+                            
                             TextComponent(text='情緒 :', size='lg', color='#9d9d9d', align='center'), 
-                            TextComponent(text='{0}'.format(emotion), size='lg', color='#00BE00', weight='bold')                                          
+                            TextComponent(text='{0}'.format(emotion), size='lg', color='#00BE00', weight='bold')
                         ]
                     ),
 

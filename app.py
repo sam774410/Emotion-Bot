@@ -30,7 +30,7 @@ from face.emotion import Emotion
 from template.dashboard import Dashboard
 from datetime import datetime,timezone,timedelta
 
-#img tmp folder
+# img tmp folder
 static_tmp_path = os.path.join(os.getcwd(), 'static', 'tmp')
 static_align_path = os.path.join(os.getcwd(), 'static', 'alignment')
 # static url 
@@ -98,6 +98,7 @@ def handle_img_message(event):
         local_dt = dt.astimezone(tzutc_8)
         mdatetime = local_dt.strftime('%Y%m%d')
     
+        # store 
         message_content = line_bot_api.get_message_content(event.message.id)
         with tempfile.NamedTemporaryFile(dir=static_tmp_path, prefix=mdatetime+'-',delete=False) as tf:
             for chunk in message_content.iter_content():
