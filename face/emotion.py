@@ -43,8 +43,8 @@ class Emotion():
             resp["confidence"] = confidence
             resp["info"] = "no face detected"
             return resp
-        # too many faces
-        elif len(faces) > 1:
+        # too many faces > 15
+        elif len(faces) > 15:
             #print("too more faces")
             resp = dict()
             resp["isRecognized"] = True
@@ -53,10 +53,24 @@ class Emotion():
             resp["confidence"] = confidence
             resp["info"] = "too mamy faces detected"
             return resp
-        # only one face
+
+        # less then 15 faces
         else:
-            #print("got one face")
+            results = []
+            confidenses = []
+            img_names = []
+
+            # create hero image
+            hero_face = np.zeros(rgb.shape, np.uint8)
+            hero_face = rgb.copy()
+            
+            index_of_faces = 0
+
             for (x, y, w, h) in faces:
+                # rectangle hero image
+                cv2.rectangle(hero_face, (x, y), (x+w, y+h), (0, 255, 0), 3)
+                #hero_face = cv2.resize(hero_face, (400, 500))
+
                 # crop face
                 rect = dlib.rectangle(x,y,x+w+10,y+h+15)
                 # alignment
@@ -65,13 +79,17 @@ class Emotion():
                 cropped_img = cv2.resize(faceAligned, (224, 224))
                 # bgr2rgb(opencv)
                 cropped_img = cv2.cvtColor(cropped_img, cv2.COLOR_BGR2RGB)
-                #save alignment
+                # save alignment img
                 file_name = os.path.basename(self.img_path)
-                cv2.imwrite('{0}/{1}'.format(static_alignment_path, file_name), cropped_img)
+                
+                cv2.imwrite('{0}/{2}_{1}'.format(static_alignment_path, file_name, index_of_faces), cropped_img, [cv2.IMWRITE_JPEG_QUALITY, 60])
+                img_names.append('{1}_{0}'.format(file_name, index_of_faces))
 
+                index_of_faces += 1
+                
                 # img to tensor & predict
                 img_tensor = image.img_to_array(cropped_img)
-                img_tensor = np.expand_dims(img_tensor, axis=0)
+                img_tensor = np.expand_dims(img_tensor, axis=0) 
                 img_tensor /= 255.
                 prediction = model.predict(img_tensor)
                 maxindex = int(np.argmax(prediction))
@@ -86,21 +104,35 @@ class Emotion():
                 result = str(self.emotion_dict[maxindex])
                 confidence = round(np.max(pred[0]) * 100, 2) 
                 
+
                 # enhance worry 
                 if float(pred[0][7]) >= self.worry_threshold or maxindex==2 and float(pred[0][7]) >= 0.0050:
-                    print("is worry")
+                    #print("is worry")
                     result = str(self.emotion_dict[7])
+                    #results[-1] = result
                     confidence = round(float(pred[0][7]) * 150, 2)
                     if float(confidence) >= 100.00:
                         confidence = 100.00
+                    #confidenses[-1] = confidence
 
-                resp = dict()
-                resp["isRecognized"] = True
-                resp["numOfFaces"] = len(faces)
-                resp["emotion"] = result
-                resp["confidence"] = confidence
-                resp["info"] = "ok"
-                return resp
+                results.append(result)
+                confidenses.append(confidence)
+                
+            # save hero face
+            hero_face = cv2.resize(hero_face, (500, 600))
+            hero_face = cv2.cvtColor(hero_face, cv2.COLOR_BGR2RGB)
+            cv2.imwrite('{0}/{2}_{1}'.format(static_alignment_path, file_name, "hero"), hero_face, [cv2.IMWRITE_JPEG_QUALITY, 60])
+                
+
+            resp = dict()
+            resp["isRecognized"] = True
+            resp["numOfFaces"] = len(faces)
+            resp["emotions"] = results
+            resp["hero_image"] = "hero_{0}".format(file_name)
+            resp["confidences"] = confidenses
+            resp["img_names"] = img_names
+            resp["info"] = "ok"
+            return resp
 
 if __name__ == "__main__":
    

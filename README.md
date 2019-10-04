@@ -21,12 +21,11 @@ Using deep learning neural networks approach to classify **eight categories** of
 - Training with [Data Augmentation](https://keras.io/preprocessing/image/)
 
 ## Approach
-1. Use **Haar Cascade** to detect face.
-2. If detected **One**(current phase ONLY support one face in an image) face.
-3. Facial landmarks & Alignment.
-4. Resized to **224x224** and convert to tensor, passed as input to the ResNet50.
-5. Outputs softmax scores for the eights classes.
-6. Show result & confidence score
+1. Use **Haar Cascade** to detect faces.
+2. Facial landmarks & Alignment.
+3. Resized to **224x224** and convert to tensor, passed as input to the ResNet50.
+4. Outputs softmax scores for the eights classes.
+5. Show result & confidence score
 
 
 ## Result & Demo
@@ -41,6 +40,6 @@ run 50 epochs and validation accuracy stopped at 79%
 #### Demo
 Via Line bot as demo, input an image then return predict result.
 image source: [JAFFE](http://www.kasrl.org/jaffe.html) 
-![Imgur](https://i.imgur.com/kqx8QSE.jpg?1)
+![Imgur](https://i.imgur.com/MLCBTAB.jpg?1)
 
 ###### tags: `LineBot`

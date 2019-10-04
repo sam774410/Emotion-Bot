@@ -117,7 +117,7 @@ def handle_img_message(event):
         resp = img.predict()
         print(resp)
 
-        # 判斷回傳臉數
+        # chk numOfFaces
 
         numOfFaces = int(resp["numOfFaces"])
         dashboard = Dashboard()
@@ -125,13 +125,15 @@ def handle_img_message(event):
         if numOfFaces == 0:
             line_bot_api.reply_message(event.reply_token, dashboard.no_face())
         # multiple face
-        elif numOfFaces > 1:
+        elif numOfFaces > 15:
             line_bot_api.reply_message(event.reply_token, dashboard.too_many_faces())
         else:
-            
-            img_url = DOMAIN_URL+'/images/alignment/{0}'.format(dist_name)
-        
-            line_bot_api.reply_message(event.reply_token, dashboard.show_single_result(img_url, resp["emotion"], resp["confidence"]))
+            emotions = [emo for emo in resp["emotions"]]
+            confidences = [conf for conf in resp["confidences"]]
+
+
+        # line_bot_api.reply_message(event.reply_token, dashboard.show_single_result(img_url, resp["emotion"], resp["confidence"]))
+        line_bot_api.reply_message(event.reply_token, dashboard.show_multiple_result(resp["hero_image"], resp["img_names"], resp["emotions"], resp["confidences"]) )
         # line_bot_api.reply_message(
         # event.reply_token,
         # TextSendMessage(text="{0}\n{1}\n{2}".format(resp["info"], resp["emotion"], resp["confidence"])))
@@ -192,6 +194,6 @@ def line_single_img(id, preview, orign):
 import os
 if __name__ == "__main__":
     # heroku
-    #app.run(host='0.0.0.0', port=os.environ['PORT'])
+    # app.run(host='0.0.0.0', port=os.environ['PORT'])
     # local test
     app.run(host='0.0.0.0', port=2000)
