@@ -40,6 +40,6 @@ run 50 epochs and validation accuracy stopped at 79%
 #### Demo
 Via Line bot as demo, input an image then return predict result.
 image source: [JAFFE](http://www.kasrl.org/jaffe.html) 
-![Imgur](https://i.imgur.com/MLCBTAB.jpg?1)
+![Imgur](https://i.imgur.com/MLCBTAB.jpg?2)
 
 ###### tags: `LineBot`
